@@ -1,10 +1,8 @@
 [project]
 name = "ksec"
-version = "0.1.0"
+version = "0.2.0"
 description = "Kubernetes secrets pretty printer"
-authors = [
-    { name = "Tucker Beck", email = "tucker.beck@gmail.com" },
-]
+authors = [ { name = "Tucker Beck", email = "tucker.beck@gmail.com" } ]
 license = "MIT"
 readme = "README.md"
 homepage = "https://github.com/dusktreader/ksec"
@@ -15,6 +13,13 @@ dependencies = [
     "typer>=0.12.5",
 ]
 
+[dependency-groups]
+dev = [
+    "mypy>=1.13.0",
+    "ruff>=0.7.2",
+    "types-pyyaml>=6.0.12.20240917",
+]
+
 [project.scripts]
 ksec = "ksec.main:app"
 
@@ -22,6 +27,9 @@ ksec = "ksec.main:app"
 yaml = [
     "pyyaml>=6.0.2",
 ]
+
+[tool.ruff]
+line-length = 100
 
 [build-system]
 requires = ["hatchling"]
