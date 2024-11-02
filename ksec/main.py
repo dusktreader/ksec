@@ -11,6 +11,7 @@ from typing import Annotated
 import typer
 from auto_name_enum import AutoNameEnum, auto
 from rich import print
+from rich.console import Console
 from thefuzz import process
 
 yaml: ModuleType | None
@@ -30,31 +31,60 @@ class Mode(AutoNameEnum):
 
 def boom(message: str):
     print(
-        f"[bold yellow]{message}[/bold yellow]. [bold red]Aborting...[/bold red]",
-        file=sys.stderr
+        f"[bold yellow]{message}[/bold yellow]. [bold red]Aborting...[/bold red]", file=sys.stderr
     )
     sys.exit(1)
 
 
+def ghost(message):
+    console = Console()
+    with console.screen():
+        console.print(f"{message}\n\n(Press <ctrl-c> to exit)")
+        try:
+            while True:
+                from time import sleep
+
+                sleep(0.1)
+        except KeyboardInterrupt:
+            pass
+
+
 @app.command()
 def pretty(
-    mode: Annotated[Mode, typer.Option(
-        "--mode",
-        "-m",
-        case_sensitive=False,
-        help="""
+    mode: Annotated[
+        Mode,
+        typer.Option(
+            "--mode",
+            "-m",
+            case_sensitive=False,
+            help="""
             Set the format that should be processed from stdin.
             [yellow]YAML mode requires installation with the yaml flag.[/yellow]
             """,
-    )] = Mode.JSON,
-    full: Annotated[bool, typer.Option(
-        "--full",
-        "-f",
-        help="Include all the metadata for the secrets, not just the data",
-    )]= False,
-    search: Annotated[str | None, typer.Argument(
-        help="Match a named secret data item using fuzzy search",
-    )] = None,
+        ),
+    ] = Mode.JSON,
+    full: Annotated[
+        bool,
+        typer.Option(
+            "--full",
+            "-f",
+            help="Include all the metadata for the secrets, not just the data",
+        ),
+    ] = False,
+    ephemeral: Annotated[
+        bool,
+        typer.Option(
+            "--ephemeral",
+            "-e",
+            help="Show the output in a temporary buffer that will be cleared upon exit.",
+        ),
+    ] = False,
+    search: Annotated[
+        str | None,
+        typer.Argument(
+            help="Match a named secret data item using fuzzy search",
+        ),
+    ] = None,
 ):
     """
     Display decoded kubernetes secrets printed by kubectl.
@@ -92,11 +122,12 @@ def pretty(
         (hit, _) = process.extractOne(search, data.keys())
         target = {hit: data[hit]}
 
+    printer = print if not ephemeral else ghost
     match mode:
         case Mode.JSON:
-            print(json.dumps(target, indent=2))
+            printer(json.dumps(target, indent=2))
         case Mode.YAML:
             if not yaml:
                 boom("Not installed with the `yaml` option")
                 sys.exit(1)
-            print(yaml.dump(target))
+            printer(yaml.dump(target))

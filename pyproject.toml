@@ -1,6 +1,6 @@
 [project]
 name = "ksec"
-version = "0.3.0"
+version = "0.4.0"
 description = "Kubernetes secrets pretty printer"
 authors = [ { name = "Tucker Beck", email = "tucker.beck@gmail.com" } ]
 license = "MIT"
@@ -31,6 +31,12 @@ yaml = [
 
 [tool.ruff]
 line-length = 100
+
+[tool.mypy]
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = [ "thefuzz" ]
 
 [build-system]
 requires = ["hatchling"]

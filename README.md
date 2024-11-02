@@ -50,22 +50,22 @@ $ ksec --help
 
  kubectl get secret my-secret -o json | ksec
 
-╭─ Arguments ─────────────────────────────────────────────────────────────────────────────╮
-│   search      [SEARCH]  Match a named secret data item using fuzzy search               │
-│                         [default: None]                                                 │
-╰─────────────────────────────────────────────────────────────────────────────────────────╯
-╭─ Options ───────────────────────────────────────────────────────────────────────────────╮
-│ --mode                -m      [JSON|YAML]  Set the format that should be processed from │
-│                                            stdin. YAML mode requires installation with  │
-│                                            the yaml flag.                               │
-│                                            [default: JSON]                              │
-│ --full                -f                   Include all the metadata for the secrets,    │
-│                                            not just the data                            │
-│ --install-completion                       Install completion for the current shell.    │
-│ --show-completion                          Show completion for the current shell, to    │
-│                                            copy it or customize the installation.       │
-│ --help                                     Show this message and exit.                  │
-╰─────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ Arguments ─────────────────────────────────────────────────────────────────────────────────────╮
+│   search      [SEARCH]  Match a named secret data item using fuzzy search [default: None]       │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ Options ───────────────────────────────────────────────────────────────────────────────────────╮
+│ --mode                -m      [JSON|YAML]  Set the format that should be processed from stdin.  │
+│                                            YAML mode requires installation with the yaml flag.  │
+│                                            [default: JSON]                                      │
+│ --full                -f                   Include all the metadata for the secrets, not just   │
+│                                            the data                                             │
+│ --ephemeral           -e                   Show the output in a temporary buffer that will be   │
+│                                            cleared upon exit.                                   │
+│ --install-completion                       Install completion for the current shell.            │
+│ --show-completion                          Show completion for the current shell, to copy it or │
+│                                            customize the installation.                          │
+│ --help                                     Show this message and exit.                          │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────╯
 ```
 
 
