@@ -49,6 +49,7 @@ def pretty(
     full: Annotated[bool, typer.Option(
         "--full",
         "-f",
+        help="Include all the metadata for the secrets, not just the data",
     )]= False,
 ):
     """
