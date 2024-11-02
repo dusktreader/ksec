@@ -11,6 +11,7 @@ from typing import Annotated
 import typer
 from auto_name_enum import AutoNameEnum, auto
 from rich import print
+from thefuzz import process
 
 yaml: ModuleType | None
 try:
@@ -51,6 +52,9 @@ def pretty(
         "-f",
         help="Include all the metadata for the secrets, not just the data",
     )]= False,
+    search: Annotated[str | None, typer.Argument(
+        help="Match a named secret data item using fuzzy search",
+    )] = None,
 ):
     """
     Display decoded kubernetes secrets printed by kubectl.
@@ -61,6 +65,7 @@ def pretty(
     """
 
     text = sys.stdin.read()
+    payload: dict = {}
     match mode:
         case Mode.JSON:
             payload = json.loads(text)
@@ -73,13 +78,20 @@ def pretty(
 
             payload = yaml.safe_load(text)
         case _:
-            raise RuntimeError("This should not be possible")
+            boom(f"Unmatched mode {mode}. This should not be possible!")
 
     data = {k: base64.b64decode(v).decode("utf-8") for (k, v) in payload["data"].items()}
     target = data
-    if full:
+
+    if full and search:
+        boom("You cannont specify --full with a search term")
+    elif full:
         payload["data"] = data
         target = payload
+    elif search:
+        (hit, _) = process.extractOne(search, data.keys())
+        target = {hit: data[hit]}
+
     match mode:
         case Mode.JSON:
             print(json.dumps(target, indent=2))
