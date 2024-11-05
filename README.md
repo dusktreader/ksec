@@ -1,3 +1,7 @@
+![Python Version from PEP 621 TOML](https://img.shields.io/python/required-version-toml?tomlFilePath=https%3A%2F%2Fraw.githubusercontent.com%2Fdusktreader%2Fksec%2Fmain%2Fpyproject.toml)
+![PyPI - Version](https://img.shields.io/pypi/v/ksec)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/dusktreader/ksec/qa_on_push.yaml)
+
 # ksec
 
 The `ksec` tool simply decodes secrets from kubectl to make it easier for the user to

@@ -8,6 +8,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 
 
+## v0.5.0 - 2024-11-05
+
+- Added `--version` flag
+- Added github actions
+- Migrated to main python version 3.13
+- Added badges to README.md
+
+
 ## v0.4.0 - 2024-11-01
 
 - Added ephemeral output
