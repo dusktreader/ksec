@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 
 
+## v0.5.1 - 2024-11-05
+
+- Updated lock file
+
+
 ## v0.5.0 - 2024-11-05
 
 - Added `--version` flag
