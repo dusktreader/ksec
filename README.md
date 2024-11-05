@@ -4,6 +4,8 @@ The `ksec` tool simply decodes secrets from kubectl to make it easier for the us
 view them. It can parse output from kubectl in either JSON or YAML (if you install with
 the `yaml` extra).
 
+![asciicast](https://github.com/dusktreader/ksec/blob/main/etc/ksec.gif)
+
 
 ## Quickstart
 
